@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action of Draft Customer -->
+    <record id="res_partner_action_customer" model="ir.actions.act_window">
+        <field name="name">Draft Customer</field>
+         <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'create': False}</field>
+        <field name="domain">[('is_draft_customer', '=', True)]</field>
+    </record>
+
+    <!-- Menu of Draft Customer -->
+    <menuitem
+        id="draft_customer_menu"
+        parent="sale.sale_order_menu"
+        action="res_partner_action_customer"
+        sequence="3"
+    />
+
+    <!-- Passed 'from_create_edit' key in context for identify -->
+    <record model="ir.ui.view" id="view_order_form_sale_extension">
+        <field name="name">view.order.form.sale.extension</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="context">{
+                    'res_partner_search_mode': 'customer',
+                    'show_address': 1,
+                    'show_vat': True,
+                    'from_create_edit': True
+                }</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

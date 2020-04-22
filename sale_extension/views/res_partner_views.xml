@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Added Approved button and visible only Administrator -->
+    <record id="view_partner_form_sale_extension" model="ir.ui.view">
+        <field name="name">view.partner.form.sale.extension</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-check"
+                    name="get_approved_draft_customer"
+                    attrs="{'invisible': [('is_draft_customer', '=', False)]}"
+                    groups="sales_team.group_sale_manager">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text">Approved</span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="is_draft_customer" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
